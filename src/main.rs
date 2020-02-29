@@ -3,7 +3,7 @@ use std::io::stdin;
 fn main() {
     let result: i32 = read_input()
         .into_iter()
-        .map(|x| x / 3 - 2)
+        .map(total_mass)
         .sum();
     println!("{}", result);
 }
@@ -24,4 +24,20 @@ fn read_input() -> Vec<i32> {
     }
 
     vec
+}
+
+fn total_mass(mass: i32) -> i32 {
+    let mut result = 0;
+
+    let mut unaccounted = mass;
+    while unaccounted > 0 {
+        unaccounted = needs_fuel(unaccounted);
+        result += unaccounted;
+    }
+
+    result
+}
+
+fn needs_fuel(mass: i32) -> i32 {
+    std::cmp::max(mass / 3 - 2, 0)
 }
